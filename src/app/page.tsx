@@ -3,6 +3,32 @@
 import BlurText from "@/components/shared/BlurText";
 import Header from "@/components/ui/Header";
 import Iridescence from "@/components/shared/Iridescence";
+import ProjectCard from "@/components/ProjectCard";
+
+// Example projects data
+const projects = [
+  {
+    title: "Project One",
+    description: "A beautiful, interactive web application built with Next.js and Three.js",
+    image: "/project1.jpg", // Add your project images to public folder
+    tags: ["Next.js", "Three.js", "TailwindCSS"],
+    link: "https://project1.com"
+  },
+  {
+    title: "Project Two",
+    description: "Full-stack application with real-time updates and modern UI",
+    image: "/project2.jpg",
+    tags: ["React", "Node.js", "WebSocket"],
+    link: "https://project2.com"
+  },
+  {
+    title: "Project Three",
+    description: "Mobile-first responsive design with smooth animations",
+    image: "/project3.jpg",
+    tags: ["React Native", "TypeScript", "Firebase"],
+    link: "https://project3.com"
+  }
+];
 
 export default function Home() {
   return (
@@ -70,6 +96,30 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Projects Section */}
+        <section id="projects" className="min-h-screen py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <BlurText
+                text="Featured Projects"
+                className="text-4xl font-bold text-white mb-4"
+              />
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                Here are some of my recent works. Each project is crafted with attention to detail and modern technologies.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <ProjectCard
+                  key={project.title}
+                  {...project}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
