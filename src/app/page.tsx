@@ -5,6 +5,8 @@ import Header from "@/components/ui/Header";
 import Iridescence from "@/components/shared/Iridescence";
 import ProjectCard from "@/components/ProjectCard";
 import { motion } from "framer-motion";
+import SplashCursor from "@/components/shared/SplashCursor";
+
 
 // Example projects data
 const projects = [
@@ -49,6 +51,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <SplashCursor />
       <main className="min-h-screen bg-black">
         {/* Hero Section */}
         <div className="h-screen flex flex-col items-center justify-center relative px-4">
