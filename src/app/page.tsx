@@ -4,6 +4,7 @@ import BlurText from "@/components/shared/BlurText";
 import Header from "@/components/ui/Header";
 import Iridescence from "@/components/shared/Iridescence";
 import ProjectCard from "@/components/ProjectCard";
+import { motion } from "framer-motion";
 
 // Example projects data
 const projects = [
@@ -31,6 +32,20 @@ const projects = [
 ];
 
 export default function Home() {
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      const header = document.querySelector('header');
+      const headerHeight = header?.offsetHeight || 0;
+      const targetPosition = projectsSection.offsetTop - headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <>
       <Header />
@@ -53,7 +68,7 @@ export default function Home() {
 
             {/* Main Title */}
             <BlurText
-              text="Andy T"
+              text="Andy Tamburino"
               delay={100}
               className="text-5xl font-bold text-white"
             />
@@ -74,31 +89,54 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex gap-4 mt-8">
-              <a 
-                href="#projects" 
+              <motion.button
+                onClick={scrollToProjects}
                 className="px-6 py-3 rounded-full bg-white text-black hover:bg-gray-200 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 View Projects
-              </a>
-              <a 
-                href="#contact" 
+              </motion.button>
+              <motion.a
+                href="mailto:tamburinoandrew@gmail.com"
                 className="px-6 py-3 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Get in Touch
-              </a>
+              </motion.a>
             </div>
           </div>
 
           {/* Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <motion.div 
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+            onClick={scrollToProjects}
+            whileHover={{ y: 5 }}
+            animate={{ 
+              y: [0, 10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
             <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-2">
-              <div className="w-1 h-2 bg-white/60 rounded-full animate-bounce" />
+              <div className="w-1 h-2 bg-white/60 rounded-full" />
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen py-20 px-4">
+        <motion.section 
+          id="projects" 
+          className="min-h-screen py-20 px-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <BlurText
@@ -110,16 +148,35 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
-                <ProjectCard
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.2
+                  }
+                }
+              }}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              {projects.map((project, index) => (
+                <motion.div
                   key={project.title}
-                  {...project}
-                />
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    show: { opacity: 1, y: 0 }
+                  }}
+                >
+                  <ProjectCard {...project} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
     </>
   );
