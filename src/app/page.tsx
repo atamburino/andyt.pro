@@ -6,6 +6,7 @@ import Iridescence from "@/components/shared/Iridescence";
 import ProjectCard from "@/components/ProjectCard";
 import { motion } from "framer-motion";
 import SplashCursor from "@/components/shared/SplashCursor";
+import SpotifyNowPlaying from "@/components/SpotifyNowPlaying";
 
 
 // Example projects data
@@ -90,6 +91,21 @@ export default function Home() {
               className="text-gray-500 max-w-md text-center"
             />
 
+            {/* Spotify Now Playing */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-4"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-xs text-gray-500 uppercase tracking-wider">Currently Vibing To</p>
+                <div className="transform hover:scale-105 transition-transform duration-300">
+                  <SpotifyNowPlaying />
+                </div>
+              </div>
+            </motion.div>
+
             {/* CTA Buttons */}
             <div className="flex gap-4 mt-8">
               <motion.button
@@ -111,7 +127,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll Indicator */}
+          {/* Commented out scroll indicator
           <motion.div 
             className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
             onClick={scrollToProjects}
@@ -129,6 +145,7 @@ export default function Home() {
               <div className="w-1 h-2 bg-white/60 rounded-full" />
             </div>
           </motion.div>
+          */}
         </div>
 
         {/* Projects Section */}
