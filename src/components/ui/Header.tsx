@@ -6,13 +6,31 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const navItems = [
-  { label: 'Projects', href: '/projects' },
+  { label: 'Projects', href: '#projects', isScroll: true },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isScroll?: boolean) => {
+    if (isScroll && pathname === '/') {
+      e.preventDefault();
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        const header = document.querySelector('header');
+        const headerHeight = header?.offsetHeight || 0;
+        const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight - 32;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 p-4 z-50 backdrop-blur-sm">
@@ -33,6 +51,7 @@ export default function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href, item.isScroll)}
                     className={`px-4 py-2 rounded-full transition-colors relative ${
                       isActive ? 'text-white' : 'text-gray-400 hover:text-white'
                     }`}
